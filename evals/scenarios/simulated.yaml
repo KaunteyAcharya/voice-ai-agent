@@ -1,0 +1,61 @@
+# Simulated callers: an LLM plays each caller with a goal, talks to Aditi until
+# it is done, and a judge decides whether Aditi got the caller what they needed.
+name: simulated
+judge: !include ../judge.yaml
+simulator:
+  factory: evals.factories.caller
+  model: openai/gpt-oss-120b
+max_turns: 12
+metrics:
+  - name: voice_style
+    criterion: "the reply is short (one or two sentences), in a natural spoken style, with no markdown, lists or emojis"
+    min_score: 0.8
+
+scenarios:
+  - name: buyer_books_visit
+    persona: >
+      Rohan, a first-time home buyer in Ahmedabad. Friendly and brief. Answers one question at a time and
+      only gives details when asked. His name is Rohan and his mobile number is 98765 11111.
+    goal: >
+      Find a 3 BHK to buy in Bopal for under 90 lakh, then book a site visit to it for tomorrow at 11 AM.
+      If that time is taken, accept the first alternative offered. Give your name and number when asked.
+      Say goodbye once Aditi has read out a confirmation code. Only hang up after Aditi has clearly confirmed it; never in the same turn as asking for something.
+    success: >
+      The bot recommended Sapna Greens, told the caller that 11 AM tomorrow was taken, booked an
+      alternative time and gave a confirmation code.
+
+  - name: hindi_renter
+    persona: >
+      Kavita, who prefers to speak Hindi and writes only in Devanagari. She is looking for a flat to rent.
+    goal: >
+      Speaking only Hindi, find a 2 BHK on rent in Satellite for up to 30 thousand a month, ask whether it is
+      furnished, then say goodbye in Hindi. Only hang up after Aditi has clearly confirmed it; never in the same turn as asking for something.
+    success: >
+      The bot replied in Hindi throughout, suggested Mansi Apartments in Satellite at about 28 thousand
+      rupees a month and said it is fully furnished.
+
+  - name: reschedule_existing
+    persona: >
+      Meera, who already has a site visit booked with Tatsat Real Estate. Her mobile number is 98765 00001.
+    goal: >
+      Move your existing site visit to 5 PM on the same day, confirm the change when asked, then say goodbye. Only hang up after Aditi has clearly confirmed it; never in the same turn as asking for something.
+    success: >
+      The bot found Meera's booking with code SH-4242 and rescheduled it to 5 PM, keeping the same code.
+
+  - name: cancel_existing
+    persona: >
+      Meera, who already has a site visit booked with Tatsat Real Estate. Her mobile number is 98765 00001.
+    goal: >
+      Cancel your site visit. Give your number when asked, and confirm you are sure if asked. Then say goodbye. Only hang up after Aditi has clearly confirmed it; never in the same turn as asking for something.
+    success: >
+      Once Meera had clearly said she wanted to cancel, the bot cancelled booking SH-4242 and told her it was cancelled.
+
+  - name: off_topic_pushback
+    persona: >
+      A chatty caller who wants cricket scores and a stock tip before getting to the point.
+    goal: >
+      First ask who won yesterday's cricket match, then ask for a stock tip. If the bot will not answer,
+      ask about a 1 BHK to rent in Chandkheda instead, then say goodbye. Only hang up after Aditi has clearly confirmed it; never in the same turn as asking for something.
+    success: >
+      The bot declined the cricket and stock questions without answering them, then suggested Metro Nest in
+      Chandkheda at about 12 thousand rupees a month.

@@ -1,0 +1,13 @@
+{
+  "name": "riya-client-vendor",
+  "private": true,
+  "description": "Rebuilds client/vendor/pipecat-client.js. Only needed when upgrading the Pipecat JS SDK.",
+  "scripts": {
+    "build": "esbuild entry.js --bundle --format=esm --minify --target=es2020 --legal-comments=eof --outfile=../vendor/pipecat-client.js"
+  },
+  "devDependencies": {
+    "@pipecat-ai/client-js": "1.13.1",
+    "@pipecat-ai/small-webrtc-transport": "1.10.8",
+    "esbuild": "0.25.10"
+  }
+}

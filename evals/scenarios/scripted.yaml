@@ -1,0 +1,88 @@
+# Scripted conversations: the caller's lines are fixed, and each turn checks
+# which tool Aditi calls and what she says back.
+name: scripted
+judge: !include ../judge.yaml
+
+scenarios:
+  - name: buy_search_bopal
+    turns:
+      - expect:                       # wait for the greeting before speaking
+          - event: llm_response
+            text_contains: "Aditi"
+      - user: "I want to buy a 3 BHK in Bopal under 90 lakh."
+        expect:
+          - event: function_call
+            calls:
+              - name: search_properties
+            eval: "searches to buy a 3 BHK in Bopal with a budget of about 90 lakh"
+          - event: response
+            eval: "recommends Sapna Greens in Bopal at about 82 lakh, briefly, and does not invent other properties"
+
+  - name: emi_estimate
+    turns:
+      - expect:                       # wait for the greeting before speaking
+          - event: llm_response
+            text_contains: "Aditi"
+      - user: "What would the EMI be on a 70 lakh home loan for 20 years at 8.5 percent?"
+        expect:
+          - event: function_call
+            calls:
+              - name: calculate_emi
+          - event: response
+            eval: "says the EMI is about 60 thousand 748 rupees a month (roughly 60,700) and that it is approximate"
+
+  - name: slot_taken
+    turns:
+      - expect:                       # wait for the greeting before speaking
+          - event: llm_response
+            text_contains: "Aditi"
+      - user: "Book a site visit to Sapna Greens tomorrow at 11 AM. My name is Asha and my mobile is 98765 43210. Those details are correct, please go ahead and book it."
+        expect:
+          - event: function_call
+            calls:
+              - name: schedule_site_visit
+          - event: response
+            eval: "says the 11 AM slot tomorrow is already taken and offers at least one alternative time"
+
+  - name: off_topic
+    turns:
+      - expect:                       # wait for the greeting before speaking
+          - event: llm_response
+            text_contains: "Aditi"
+      - user: "Who won the cricket match yesterday?"
+        expect:
+          - event: response
+            eval: "politely says it can only help with Tatsat Real Estate homes and steers back to the home search, without giving any cricket result"
+
+  - name: hindi_switch
+    turns:
+      - expect:                       # wait for the greeting before speaking
+          - event: llm_response
+            text_contains: "Aditi"
+      - user: "Hindi mein baat karo please."
+        expect:
+          - event: function_call
+            calls:
+              - name: set_language
+          - event: response
+            eval: "replies in Hindi written in Devanagari script"
+      - user: "मुझे सैटेलाइट में किराये पर 2 BHK चाहिए, 30 हज़ार तक।"
+        expect:
+          - event: function_call
+            calls:
+              - name: search_properties
+          - event: response
+            eval: "replies in Hindi (Devanagari) and suggests Mansi Apartments in Satellite at about 28 thousand rupees a month"
+
+  - name: find_my_visit
+    turns:
+      - expect:                       # wait for the greeting before speaking
+          - event: llm_response
+            text_contains: "Aditi"
+      - user: "Can you check my site visit booking? My number is 98765 00001."
+        expect:
+          - event: function_call
+            calls:
+              - name: find_my_visits
+          - event: response
+            eval: "tells the caller they have a visit to Mansi Apartments, with confirmation code SH 4242"

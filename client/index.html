@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tatsat Real Estate · Talk to Aditi</title>
+  <meta name="description" content="A real-time Hindi + English voice assistant for a real estate agency, built with Pipecat." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231D1C1A'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Georgia,serif' font-size='32' fill='%23D9C3A0'%3ET%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Serif+Devanagari:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">T</span>
+      <span class="brand-name">Tatsat</span>
+      <span class="brand-sub" data-i18n="brandSub">Real Estate · Ahmedabad</span>
+    </div>
+    <div class="topbar-right">
+      <div class="latency" id="latency" title="Time from the end of your speech to the start of Aditi's voice">
+        <span class="latency-dot" aria-hidden="true"></span>
+        <span data-i18n="latency">Response</span>
+        <strong id="latency-value">—</strong>
+        <span class="latency-stages" id="latency-stages">STT – · LLM – · TTS –</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="config-banner" id="config-banner" hidden></div>
+
+  <main class="layout">
+    <!-- Agent -->
+    <section class="column agent">
+      <div class="agent-head">
+        <p class="eyebrow" data-i18n="role">Property advisor</p>
+        <h1 class="agent-name" data-i18n="agentName">Aditi</h1>
+        <p class="agent-intro" data-i18n="subtitle">Find a home, estimate an EMI or book a site visit, just by talking.</p>
+      </div>
+
+      <div class="visual" id="orb-wrap" data-mode="idle">
+        <canvas id="orb" width="480" height="480" aria-hidden="true"></canvas>
+      </div>
+
+      <div class="status" id="status" role="status" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span><span id="status-text">Ready</span>
+      </div>
+
+      <div class="controls">
+        <div class="lang-picker" role="radiogroup" aria-label="Language" id="lang-picker">
+          <button type="button" role="radio" data-lang="en" aria-checked="true">English</button>
+          <button type="button" role="radio" data-lang="hi" aria-checked="false" class="deva">हिंदी</button>
+        </div>
+
+        <button type="button" class="call-btn" id="call-btn">
+          <span id="call-btn-text" data-i18n="start">Start call</span>
+        </button>
+
+        <p class="hint" data-i18n="hint">Allow the microphone when asked. You can interrupt Aditi at any time.</p>
+      </div>
+
+      <p class="stack" id="stack-chip">Pipecat · WebRTC</p>
+    </section>
+
+    <!-- Conversation -->
+    <section class="column conversation">
+      <div class="column-head">
+        <h2 data-i18n="conversation">Conversation</h2>
+        <span class="lang-badge" id="lang-badge">EN</span>
+      </div>
+      <div class="transcript" id="transcript">
+        <div class="empty" id="transcript-empty">
+          <p class="empty-title" data-i18n="emptyTranscript">Start a call and say hello.</p>
+          <p class="empty-try" data-i18n="tryThis">Try: “I want to buy a 3 BHK in Bopal under 90 lakh.”</p>
+        </div>
+      </div>
+      <div class="suggestions" id="suggestions" aria-label="Example questions"></div>
+    </section>
+
+    <!-- Results -->
+    <section class="column results-column">
+      <div class="column-head">
+        <h2 data-i18n="results">Shortlist</h2>
+      </div>
+      <div class="results" id="results">
+        <div class="empty" id="results-empty">
+          <p class="empty-try" data-i18n="emptyResults">Matching homes, EMI estimates and bookings appear here as you talk.</p>
+        </div>
+      </div>
+      <div class="activity">
+        <div class="activity-head">
+          <span data-i18n="activity">Activity</span>
+          <span class="activity-count" id="toollog-count">0</span>
+        </div>
+        <ol class="activity-list" id="toollog"></ol>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="summary" id="summary" aria-label="Call summary"><div id="summary-body"></div></dialog>
+  <div class="toasts" id="toasts" aria-live="assertive"></div>
+  <audio id="bot-audio" autoplay playsinline></audio>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

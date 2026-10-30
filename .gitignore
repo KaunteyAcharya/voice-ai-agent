@@ -1,0 +1,27 @@
+# Secrets
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node (only used to rebuild client/vendor)
+node_modules/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local Claude Code preview config
+.claude/
+
+# Local bookings database
+data/
+
+# Eval logs
+*.eval.log
+*.debug.log

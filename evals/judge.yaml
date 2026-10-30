@@ -1,0 +1,6 @@
+# The judge reads Aditi's replies as text and decides each "eval:" criterion.
+# It runs on Groq's free tier (see evals/factories.py).
+modality: text
+eval:
+  factory: evals.factories.judge
+  model: qwen/qwen3.8-27b
