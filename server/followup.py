@@ -32,8 +32,8 @@ OUTSIDE_WINDOW_ERROR = 131047  # Meta: "re-engagement message" (24-hour window c
 
 _TEXT = {
     "en": {
-        "hello": "Hi {name}, thanks for calling Tatsat Real Estate! 🏠",
-        "hello_noname": "Hi, thanks for calling Tatsat Real Estate! 🏠",
+        "hello": "Hi {name}, thanks for calling Tatsat Real Estate!",
+        "hello_noname": "Hi, thanks for calling Tatsat Real Estate!",
         "liked": "Homes you were interested in:",
         "options": "A few more good options for you:",
         "visit": "Your site visit: {property}, {when} (code {code})",
@@ -41,8 +41,8 @@ _TEXT = {
         "rent": "/month",
     },
     "hi": {
-        "hello": "नमस्ते {name}, तत्सत रियल एस्टेट को कॉल करने के लिए थैंक यू! 🏠",
-        "hello_noname": "नमस्ते, तत्सत रियल एस्टेट को कॉल करने के लिए थैंक यू! 🏠",
+        "hello": "नमस्ते {name}, तत्सत रियल एस्टेट को कॉल करने के लिए थैंक यू!",
+        "hello_noname": "नमस्ते, तत्सत रियल एस्टेट को कॉल करने के लिए थैंक यू!",
         "liked": "जिन घरों में आपकी दिलचस्पी थी:",
         "options": "आपके लिए कुछ और अच्छे ऑप्शन:",
         "visit": "आपकी साइट विज़िट: {property}, {when} (कोड {code})",

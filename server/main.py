@@ -146,11 +146,11 @@ def main() -> None:
     problems = CFG.problems()
     url = f"http://{CFG.host}:{CFG.port}"
     print()
-    print("  🏠  Tatsat Real Estate · Talk to Aditi")
-    print(f"  ➜  Open {url} in Chrome, Edge or Firefox")
+    print("  Tatsat Real Estate · Talk to Aditi")
+    print(f"  Open {url} in Chrome, Edge or Firefox")
     print(f"     {CFG.describe()}")
     if problems:
-        print("  ⚠️  Configuration problems (calls will be refused until fixed):")
+        print("  Configuration problems (calls will be refused until fixed):")
         for p in problems:
             print(f"     - {p}")
         print("     Copy .env.example to .env and add your free API keys.")
